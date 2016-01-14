@@ -1,0 +1,43 @@
+/**
+ * CSS para la sección de la página del header y footer
+ * Version 0.1
+ */
+
+ @import url(https://fonts.googleapis.com/css?family=Indie+Flower);
+
+.name-page {
+  font-size: 2.5em;
+  font-family: 'Indie Flower', cursive;
+}
+.img-page {
+  max-height: 3em;
+}
+.buttons-fb {
+  margin-left: 0px;
+  margin-top: -8px;
+}
+.search-page {
+  margin-left: 10px
+}
+#footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 100px; /* choose any height */
+  background-color: black;
+}
+.active a {
+  color: black
+}
+
+
+/**
+ * CSS para la login de un usuario
+ * Version 0.1
+ */
+@import "compass/css3";
+.login-box {
+  border: 1px solid #ddd; 
+  margin: 100px 0;
+  padding: 40px 20px 0 20px;
+}

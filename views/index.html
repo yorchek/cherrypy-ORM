@@ -1,0 +1,21 @@
+{% extends "header-footer.html" %}
+{% block content %}
+  <h3> This is the start of my child template</h3>
+  <br>
+  {%if usuarios%}
+    Nuestros usuarios registrados <br>
+    {%for usuario in usuarios%}
+      {{usuario[2]}}<br>
+    {%endfor%}
+  {%endif%}
+  <br>
+  <h4>routes</h4>
+  &nbsp;/(index)<br>
+  &nbsp;/now_playing<br>
+  &nbsp;/login<br>
+  &nbsp;/dummy<br>
+  &nbsp;/mailer/test<br>
+  &nbsp;/usuario<br>
+  &nbsp;/usuario/dummy<br>
+  <h3> This is the end of my child template</h3>
+{% endblock %}

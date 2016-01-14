@@ -1,0 +1,135 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ruido vivo | Bienvenido</title>
+    <link rel="stylesheet" href="static/css/foundation.css" />
+    <link rel="stylesheet" href="static/css/app.css" />
+  </head>
+  <body onload="loadNowPlaying();">
+    <div id="fb-root"></div>
+    <script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1272449266114292',
+      cookie     : true,  // enable cookies to allow the server to access 
+                          // the session
+      xfbml      : true,  // parse social plugins on this page
+      version    : 'v2.5' // use version 2.2
+    });
+
+  // Load the SDK asynchronously
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+
+  // Now that we've initialized the JavaScript SDK, we call 
+  // FB.getLoginStatus().  This function gets the state of the
+  // person visiting this page and can return one of three states to
+  // the callback you provide.  They can be:
+  //
+  // 1. Logged into your app ('connected')
+  // 2. Logged into Facebook, but not your app ('not_authorized')
+  // 3. Not logged into Facebook and can't tell if they are logged into
+  //    your app or not.
+  //
+  // These three cases are handled in the callback function.
+
+  };</script>
+    <script>
+    // Load the SDK asynchronously
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+    <script>
+      window.twttr = (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0],
+        t = window.twttr || {};
+        if (d.getElementById(id)) return t;
+        js = d.createElement(s);
+        js.id = id;
+        js.src = "https://platform.twitter.com/widgets.js";
+        fjs.parentNode.insertBefore(js, fjs);
+     
+        t._e = [];
+        t.ready = function(f) {
+          t._e.push(f);
+        };
+ 
+      return t;
+      }(document, "script", "twitter-wjs"));
+    </script>
+
+    <div class="title-bar" data-responsive-toggle="example-menu" data-hide-for="medium">
+      <button class="menu-icon" type="button" data-toggle></button>
+      <div class="title-bar-title">Menu</div>
+    </div>
+
+    <div class="top-bar" id="example-menu">
+      <div class="top-bar-left">
+        <ul class="dropdown menu" data-dropdown-menu>
+          <li>
+            <img class="img-page" src="https://avatars1.githubusercontent.com/u/9375951?v=3&s=460" alt="Motion UI Illustration">
+          </li>
+          <li class="menu-text name-page">Ruido Vivo</li>
+          <li class="{{ inicioA }}"><a href="/">Inicio</a></li>
+          <li class="{{ acercaA }}"><a href="#">Acerca de</a></li>
+          <li class="has-submenu">
+            <a href="#">One</a>
+            <ul class="submenu menu vertical" data-submenu>
+              <li><a href="#">One</a></li>
+              <li><a href="#">Two</a></li>
+              <li><a href="#">Three</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="top-bar-left" style="margin-top:5px;margin-bottom:13px">
+        <ul class="dropdown menu" data-dropdown-menu>
+          <li><input class="search-page" type="search" placeholder="Artista o Género"></li>
+          <li><button type="button" class="button">Busca</button></li>
+        </ul>
+      </div>
+      <div class="top-bar-right">
+        <ul class="menu">
+          <li>
+            <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text=Checa%20esto">Tweet</a>
+          </li>
+          <li>
+            <a class="buttons-fb" href="#">
+              <div class="fb-like" data-href="http://ruidovivo.herokuapp.com" data-width="100px" data-layout="button" data-action="like" data-show-faces="false" data-share="true"></div>
+            </a>
+          </li>
+        </ul>
+        <ul class="menu" style="text-align:right">
+          <li class="{{ ingresaA }}">
+            <a href="/login">Ingresa</a>
+          </li>
+          <li>
+            <a href="#">Registrate</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    {% block content %}
+    {% endblock %}
+
+    <script src="static/js/vendor/jquery.min.js"></script>
+    <script src="static/js/vendor/what-input.min.js"></script>
+    <script src="static/js/foundation.min.js"></script>
+    <script src="static/js/app.js"></script>
+  </body>
+</html>
