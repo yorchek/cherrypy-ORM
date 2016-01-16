@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 import cherrypy
 import hashlib, os, sys
-from mako import *
 from models import *
 from AuthController import require, member_of
 from Jinja2Controller import *
+from MakoController import *
 
 SESSION_KEY = 'current_user'
 
@@ -38,5 +38,12 @@ class UserController(object):
     @cherrypy.tools.jinja2
     def dummy(self):
         return {}
+
+    @cherrypy.expose
+    @cherrypy.tools.user()
+    @require(member_of("user"))
+    @cherrypy.tools.mako
+    def using_mako(self):
+        return { 'username':User.find_by_email(cherrypy.session[SESSION_KEY]).name }
 
 cherrypy.tree.mount(UserController(), "/user", "app.conf")

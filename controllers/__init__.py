@@ -3,3 +3,4 @@ from AdminController import *
 from AuthController import *
 from MailerController import *
 from Jinja2Controller import *
+from MakoController import *
