@@ -6,7 +6,7 @@ import cherrypy
 import mako.lookup
 
 
-mylookup = mako.lookup.TemplateLookup(directories = ["views"], output_encoding='utf-8', encoding_errors='replace')
+mylookup = mako.lookup.TemplateLookup(directories = ["views"], input_encoding='utf-8', output_encoding='utf-8', encoding_errors='replace')
 
 class MakoTool(cherrypy.Tool):
 
