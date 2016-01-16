@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 import cherrypy
 import hashlib, os, sys
-from jinja2 import *
 from mako import *
 from models import *
-from AuthController import require
+from AuthController import require, member_of
+from Jinja2Controller import *
 
 SESSION_KEY = 'current_user'
-
-env = Environment(loader=FileSystemLoader('views'))
 
 class UserManager(cherrypy.Tool):
     def __init__(self):
@@ -16,32 +14,29 @@ class UserManager(cherrypy.Tool):
                                self.load, priority=10)
 
     def load(self):
-        print "entra a load"
         req = cherrypy.request
-        print req.path_info
         if req.path_info is "":
-            print "si es esta"
-            url  = "/usuario/"
-        elif "usuario" not in req.path_info:
-            url  = "/usuario" + req.path_info
-        print "la nueva url"
-        print url
+            url  = "/user/"
+        elif "user" not in req.path_info:
+            url  = "/user" + req.path_info
         req.path_info = url
 
 cherrypy.tools.user = UserManager()
 
-class UsuarioController(object):
+class UserController(object):
 
     @cherrypy.expose
     @cherrypy.tools.user()
     @require()
+    @cherrypy.tools.jinja2
     def index(self):
-        return "Has ingresado exitosamente "+ User.find_by_email(cherrypy.session[SESSION_KEY]).name +" <a href=\"/logout\">Salir</a>"
+        return  {'user' : User.find_by_email(cherrypy.session[SESSION_KEY]).name}
 
     @cherrypy.expose
     @cherrypy.tools.user()
-    @require()
+    @require(member_of("user"))
+    @cherrypy.tools.jinja2
     def dummy(self):
-        return "para verlo debes iniciar sesion o no?"
+        return {}
 
-cherrypy.tree.mount(UsuarioController(), "/usuario", "app.conf")
+cherrypy.tree.mount(UserController(), "/user", "app.conf")

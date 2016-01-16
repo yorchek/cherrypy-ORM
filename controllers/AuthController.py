@@ -23,14 +23,14 @@ def check_credentials(email, password, tipo):
     if from_page is None:
         from_page = "/"
     if u:
-        if "usuario" not in from_page:
-            print "no esta la url"
-            cherrypy.session[SESSION_PAGE] = "/usuario/"
+        if "user" not in from_page:
+            cherrypy.session[SESSION_PAGE] = "/user/"
         if tipo == "facebook":
             return None
         elif u.password != hashlib.sha1(password).hexdigest():
             return u"Correo y/o contraseña invalido(s)"
-    return None
+        return None
+    return u"Correo y/o contraseña invalido(s)"
     
 
 def check_auth(*args, **kwargs):
@@ -39,22 +39,15 @@ def check_auth(*args, **kwargs):
     conditions that the user must fulfill"""
     conditions = cherrypy.request.config.get('auth.require', None)
     if conditions is not None:
-        print "estamos checando"
-        print cherrypy.request.path_info
         email = cherrypy.session.get(SESSION_KEY)
         if email:
-            print email
             cherrypy.request.login = email
             for condition in conditions:
                 # A condition is just a callable that returns true or false
                 if not condition():
                     raise cherrypy.HTTPRedirect("/login")
-                else:
-                    raise cherrypy.HTTPRedirect(cherrypy.request.path_info)
         else:
             cherrypy.session[SESSION_PAGE] = cherrypy.request.path_info
-            print "no hay sesion"
-            print cherrypy.session.get(SESSION_PAGE)
             raise cherrypy.HTTPRedirect("/login")
     
 cherrypy.tools.auth = cherrypy.Tool('before_handler', check_auth)
@@ -81,8 +74,20 @@ def require(*conditions):
 
 def member_of(groupname):
     def check():
-        # replace with actual check if <email> is in <groupname>
-        return cherrypy.request.login == 'joe' and groupname == 'admin'
+        if groupname == 'admin':
+            try:
+                email = cherrypy.session.get(SESSION_KEY)
+                admin = Admin.find_by_email(email)
+            except Exception, e:
+                admin = None
+            return admin is not None
+        if groupname == 'user':
+            try:
+                email = cherrypy.session.get(SESSION_KEY)
+                user = User.find_by_email(email)
+            except Exception, e:
+                user = None
+            return user is not None
     return check
 
 # def name_is(reqd_email):
@@ -112,6 +117,6 @@ def all_of(*conditions):
 
 def send_to(usuario):
     if User.find_by_email(usuario):
-        raise cherrypy.HTTPRedirect("/usuario/")
+        raise cherrypy.HTTPRedirect("/user/")
     else:
-        raise cherrypy.HTTPRedirect("/administrador/")
+        raise cherrypy.HTTPRedirect("/admin/")

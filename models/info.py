@@ -30,8 +30,5 @@ def get_email_mailer():
 def get_passw_mailer():
 	return data['passw_mailer']
 
-def get_database_url2():
-	return data['database_url2']
-
 def get_database_psycopg():
 	return data['database_psycopg']

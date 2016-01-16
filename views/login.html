@@ -1,36 +1,6 @@
 {% extends "header-footer.html" %}
 {% block content %}  
 <script>
-
-  function loginfb(){
-    FB.login(function(response) {
-      if (response.authResponse) {
-        FB.api('/me?fields=email', function(response) {
-          dologin(response.email);
-        });
-      } else {
-      console.log('User cancelled login or did not fully authorize.');
-      }
-    }, {scope: 'public_profile,email,user_friends', return_scopes: true});
-  };
-
-  function dologin(email){
-    var form = document.createElement("form");
-    form.method = 'post';
-    form.action = '/login';
-    var input = document.createElement('input');
-    input.type = "text";
-    input.name = "email";
-    input.value = email;
-    form.appendChild(input);
-    input = document.createElement('input');
-    input.type = "text";
-    input.name = "tipo";
-    input.value = "facebook";
-    form.appendChild(input);
-    form.submit();
-  }
-
   function haslogin(){
     var form = document.createElement("form");
     form.method = 'post';
@@ -38,7 +8,7 @@
     var input = document.createElement('input');
     input.type = "text";
     input.name = "email";
-    input.value = "kuberjorg3n@hotmail.com";
+    input.value = "mary@example.com";
     form.appendChild(input);
     input = document.createElement('input');
     input.type = "text";
@@ -84,7 +54,6 @@
     </div>
     <div class="small-9 medium-9 large-9 column" style="margin-right:-10px">
       <div class="secondary button-group">
-        <button class="button" onclick="loginfb();">Inicia con fb api</button>
         <button class="button" onclick="haslogin();">Inicia con fb fake</button>
       </div>
     </div>

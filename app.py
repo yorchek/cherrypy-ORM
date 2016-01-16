@@ -16,7 +16,7 @@ __date__      = 'January 2016'
 
 env = Environment(loader=FileSystemLoader('views'))
 
-class RuidoVivo(object):
+class Blog(object):
     """Controlador de la aplicación Ruido Vivo"""
 
     @cherrypy.expose
@@ -86,11 +86,6 @@ class RuidoVivo(object):
             self.on_logout(email)
         raise cherrypy.HTTPRedirect(from_page or "/")
 
-    @cherrypy.expose
-    def dummy(self):
-        html = env.get_template("dummy.html")
-        return html.render()
-
 cherrypy.config.update({'server.socket_host': '0.0.0.0',})
 cherrypy.config.update({'server.socket_port': int(os.environ.get('PORT', '5000')),})
-cherrypy.quickstart(RuidoVivo(), "" ,"app.conf")
+cherrypy.quickstart(Blog(), "" ,"app.conf")

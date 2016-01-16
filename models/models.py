@@ -10,24 +10,24 @@ Base = declarative_base()
 
 # podemos utilizar variables de entorno
 try:
-    url = os.environ["DATABASE_URL2"]
+    url = os.environ["DATABASE_URL"]
     print "se conecto con las variables"
 except KeyError: 
-    #url = get_database_url()
-    # url = "postgresql+psycopg2://vomwiwzrwzmzkr:9No_s99GgPAjTg9mADFHh5Jz4A"
-    # url += "@ec2-54-204-12-25.compute-1.amazonaws.com:5432/d417r6qvguin8v"
+    pass
+    # con PostgreSQL
+    # url = get_database_url()
 
-#engine = create_engine(url, 
-#    connect_args={'client_encoding': 'utf8'})
-#engine.echo = True
-#engine.connect()
+# engine = create_engine(url, 
+#     connect_args={'client_encoding': 'utf8'})
+# engine.echo = True
+# engine.connect()
 
 # Si estamos utilizando sqlite3
- engine = create_engine('sqlite:///models/db/ruidodb.db',
-     connect_args={'check_same_thread':False},
-     poolclass=StaticPool)
- engine.echo = True  # Try changing this to True and see what happens
- engine.connect()
+engine = create_engine('sqlite:///models/db/database.db',
+    connect_args={'check_same_thread':False},
+    poolclass=StaticPool)
+engine.echo = True  # Try changing this to True and see what happens
+engine.connect()
 
 # creamos una nueva session
 # mantendremos la misma sesion para todas las tablas

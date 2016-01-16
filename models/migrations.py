@@ -5,23 +5,22 @@ from info import get_database_url
 
 # podemos utilizar variables de entorno
 try:
-    url = os.environ["DATABASE_URL2"]
+    url = os.environ["DATABASE_URL"]
 except KeyError: 
-    # url de acceso a la base de datos
-    url = get_database_url()
-    # url = "postgresql+psycopg2://vomwiwzrwzmzkr:9No_s99GgPAjTg9mADFHh5Jz4A"
-    # url += "@ec2-54-204-12-25.compute-1.amazonaws.com:5432/d417r6qvguin8v"
+    pass
+    # url de acceso a la base de datos PostgreSQL
+    # url = get_database_url()
 
-db = create_engine(url,
-    connect_args={'client_encoding': 'utf8'})
-db.echo = False  # Try changing this to True and see what happens
+# db = create_engine(url,
+#     connect_args={'client_encoding': 'utf8'})
+# db.echo = False  # Try changing this to True and see what happens
 # asignamos al atributo metadata para poner por default la base de datos
-metadata = MetaData(db)
+# metadata = MetaData(db)
 
 # si usamos SQLite3
-# db = create_engine('sqlite:///db/ruidodb.db')
-# db.echo = False  # Try changing this to True and see what happens
-# metadata = MetaData(db)
+db = create_engine('sqlite:///db/database.db')
+db.echo = False  # Try changing this to True and see what happens
+metadata = MetaData(db)
 
 # en esta sección irán todas las migraciones
 users = Table('users', metadata,
@@ -36,6 +35,13 @@ posts = Table('posts', metadata,
     Column('user_id', Integer, ForeignKey('users.id'), nullable=False),
     Column('name', String(50), nullable=False),
     UniqueConstraint('name', 'user_id')
+)
+
+admins = Table('admins', metadata,
+    Column('id', Integer, primary_key=True),
+    Column('email', String(40), nullable=False, unique=True),
+    Column('name', String(50), nullable=False),
+    Column('password', String, nullable=False)
 )
 
 # hacemos las migraciones
@@ -79,21 +85,23 @@ def passw(value):
 
 # método que ingresa a la base de datos algunos elementos que son por default
 def seeds():
-    i = users.insert()
-    i.execute(email='kuberjorg3n@hotmail.com' ,name='Yorche Chory', password=passw( 'punkrocker' ))
     # abrimos el acceso a la tabla con el método que utilizaremos
 
-    # users.insert()
+    i = users.insert()
 
     # si solo es un elemento
 
-    # i.execute(email='mary@example.com' ,name='Mary', password=passw( 'secret' ))
+    i.execute(email='mary@example.com' ,name='Mary', password=passw( 'secret' ))
+
+    i = admins.insert()
+
+    i.execute(email='admin@example.com' ,name='Joe', password=passw( 'password' ))
 
     # si son varios
 
-    # i.execute({'name': 'John', 'age': 42},
-    #     {'name': 'Susan', 'age': 57},
-    #     {'name': 'Carl', 'age': 33})
+    # i.execute({'email':'example1@example.com' ,'name':'example1', 'password':passw( 'secret1' )},
+    #     {'email':'example2@example.com' ,'name':'example3', 'password':passw( 'secret2' )},
+    #     {'email':'example3@example.com' ,'name':'example3', 'password':passw( 'secret3' )})
     #
     # o bien podemos importar los modelos y crearlos con los métodos de cada clase
     print "termino seeds"

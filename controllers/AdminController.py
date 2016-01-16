@@ -13,8 +13,10 @@ class AdminManager(cherrypy.Tool):
 
     def load(self):
         req = cherrypy.request
-        url  = "/administrador" + req.path_info
-        print url
+        if req.path_info is "":
+            url  = "/admin"
+        elif "admin" not in req.path_info:
+            url  = "/admin" + req.path_info
         req.path_info = url
 
 cherrypy.tools.admin = AdminManager()
@@ -66,4 +68,4 @@ class Administrador(object):
     	cherrypy.session[SESSION_KEY] = None
     	raise cherrypy.HTTPRedirect("login")
 
-cherrypy.tree.mount(Administrador(), "/administrador/", "app.conf")
+cherrypy.tree.mount(Administrador(), "/admin", "app.conf")
